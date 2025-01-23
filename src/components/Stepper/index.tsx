@@ -21,14 +21,14 @@ interface StepperProps {
 }
 
 const Stepper = ({ steps, highlightStep, separatorType }: StepperProps) => {
-  const makeSeparator = (separatorType: Separator) => {
+  const makeSeparator = ({ separatorType, step }: { separatorType: Separator; step: number }) => {
     switch (separatorType) {
       case 'line':
-        return <Line />;
+        return <Line key={`line${step}`} />;
       case 'shevron':
-        return <Shevron />;
+        return <Shevron key={`shevorn${step}`}/>;
       default:
-        return <Line />;
+        return <Line key={`line${step}`}/>;
     }
   };
 
@@ -38,7 +38,7 @@ const Stepper = ({ steps, highlightStep, separatorType }: StepperProps) => {
       const hasSeparator = step !== steps[steps.length - 1].step;
 
       nodes.push(<Step isHighlighted={isHighlighted} key={step} step={step} title={title} />);
-      if (hasSeparator) nodes.push(makeSeparator(separatorType));
+      if (hasSeparator) nodes.push(makeSeparator({ separatorType, step }));
       return nodes;
     }, [] as ReactNode[]);
 
