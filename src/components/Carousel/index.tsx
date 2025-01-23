@@ -14,7 +14,7 @@ const Carousel = ({ count, children }: CarouselProps) => {
   const STEPS_COUNT = Math.ceil(SIZE / count);
 
   const { step, containerRef, handleClickPlusStep, handleClickMinusStep } 
-    = useCarousel({ count, width: 1180 });
+    = useCarousel({ count, width: 1180, stepsCount: STEPS_COUNT });
 
   return(
     <CarouselContainer>

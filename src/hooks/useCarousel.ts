@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useCarousel = ({ count, width }: { count: number; width: number }) => {
+interface UseCarouselProps {
+  count: number;
+  width: number;
+  stepsCount: number;
+}
+
+const useCarousel = ({ count, width, stepsCount }: UseCarouselProps) => {
   const [step, setStep] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
     
@@ -13,11 +19,13 @@ const useCarousel = ({ count, width }: { count: number; width: number }) => {
   }, [step, width]);
       
   const handleClickPlusStep = (index: number | null) => {
+    if (stepsCount === 1) return;
     if (index !== null) setStep(() => index);
     else setStep((prev) => (prev + 1) % count);
   };
     
   const handleClickMinusStep = () => {
+    if (stepsCount === 1) return;
     setStep((prev) => (prev - 1 + count) % count);
   };
 
