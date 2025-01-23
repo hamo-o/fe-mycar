@@ -1,10 +1,12 @@
-import type  { PropsWithChildren } from 'react';
+import type { MouseEvent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-interface ButtonProps extends PropsWithChildren {} 
+interface ButtonProps extends PropsWithChildren {
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+}; 
 
-const Button = ({ children }: ButtonProps) => (
-  <ButtonContainer>
+const Button = ({ children, onClick }: ButtonProps) => (
+  <ButtonContainer onClick={onClick}>
     {children}
   </ButtonContainer>
 );
