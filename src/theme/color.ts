@@ -7,6 +7,6 @@ export const color = {
   highlight: '#0580A9',
   'text-default': '#000000',
   'text-disabled': '#00000080',
-  'text-sub': '#666666',   
+  'text-sub': '#606266',   
   'blue-dark': '#002C5F',
 };
