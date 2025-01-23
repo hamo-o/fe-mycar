@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
           <Route element={<App />} path='/' />
           <Route element={<VehicleSelectionPage />} path='vehicle-selection'/>
           <Route element={<ModelSelectionPage />} path='model-selection/:vehicleId' />
-          <Route element={<OptionSelectionPage />} path='option-selection' />
+          <Route element={<OptionSelectionPage />} path='option-selection/:modelId' />
           <Route element={<CompletionPage />} path='completion' />
         </Routes>
       </BrowserRouter>

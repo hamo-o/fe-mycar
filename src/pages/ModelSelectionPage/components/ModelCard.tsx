@@ -1,23 +1,31 @@
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import Button from '../../../components/Button';
 import type { Model } from '../../../domain/Model';
 import { formatNumberToMoney } from '../../../utils';
 
-const ModelCard = ({ id, vehicleId, name, spec, minPrice, imageUrl }: Model) => (
-  <ModelCardContainer>
-    <ModelTitle>
-      <ModelName>
-        {name}
-      </ModelName>
-      <ModelPrice>
-        {formatNumberToMoney({ money: minPrice, unit: 1 })}
-      </ModelPrice>
-    </ModelTitle>
-    <Image src={imageUrl} />
-    <Button>내 차 만들기</Button>
-  </ModelCardContainer>
-);
+const ModelCard = ({ id, vehicleId, name, spec, minPrice, imageUrl }: Model) => {
+  const navigate = useNavigate();
+  const handleClickRouteToModelDetail = () => {
+    navigate(`/option-selection/${id}`);
+  };
+
+  return(
+    <ModelCardContainer>
+      <ModelTitle>
+        <ModelName>
+          {name}
+        </ModelName>
+        <ModelPrice>
+          {formatNumberToMoney({ money: minPrice, unit: 1 })}
+        </ModelPrice>
+      </ModelTitle>
+      <Image src={imageUrl} />
+      <Button onClick={handleClickRouteToModelDetail}>내 차 만들기</Button>
+    </ModelCardContainer>
+  );
+};
 
 const ModelCardContainer = styled.div`
     display: flex;
