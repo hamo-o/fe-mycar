@@ -1,6 +1,7 @@
-import { type PropsWithChildren, type ReactNode, useState } from 'react';
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
+import useCarousel from '../../hooks/useCarousel';
 import CarouselControl from './CarouselControl';
 
 interface CarouselProps {
@@ -12,11 +13,8 @@ const Carousel = ({ count, children }: CarouselProps) => {
   const SIZE = children.length;
   const STEPS_COUNT = Math.ceil(SIZE / count);
 
-  const [step, setStep] = useState(0);
-  
-  const handleClickPlusStep = (index: number) => {
-    setStep(index);
-  };
+  const { step, containerRef, handleClickPlusStep, handleClickMinusStep } 
+    = useCarousel({ count, width: 1180 });
 
   return(
     <CarouselContainer>
@@ -24,14 +22,18 @@ const Carousel = ({ count, children }: CarouselProps) => {
         {new Array(STEPS_COUNT).fill(0).map((_, i) => 
           <CarouselButton $selected={i === step} onClick={() => handleClickPlusStep(i)}/>)}
       </CarouselButtons>
-      <CarouselContents>
+      <CarouselContents ref={containerRef}>
         <CarouselItems>
-          {children.map((child, index) => <CarouselItem $count={count} key={index}>
-            {child}
-          </CarouselItem>)}
+          {children.map((child, index) => 
+            <CarouselItem $count={count} key={index}>
+              {child}
+            </CarouselItem>)
+          }
         </CarouselItems>
-        <CarouselControl direction='left'/>
-        <CarouselControl direction='right'/>
+        <CarouselControl 
+          direction='left' 
+          onClick={handleClickMinusStep}/>
+        <CarouselControl direction='right'onClick={() => handleClickPlusStep(null)}/>
       </CarouselContents>
     </CarouselContainer>
   ); 
@@ -48,7 +50,9 @@ const CarouselContainer = styled.div`
 const CarouselContents = styled.div`
   width: 1180px;
   margin: 0 auto;
-  overflow: scroll;  
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; 
 `;
 
 const CarouselItems = styled.ul`
@@ -58,9 +62,11 @@ const CarouselItems = styled.ul`
 
 const CarouselItem = styled.li<{ $count: number }>`
   display: flex;
-  width: 300px;
+  width: ${({ $count }) => 
+      `calc((1180px - (${$count} - 1) * 1rem) / ${$count})`
+  };
+  scroll-snap-align: start;
 `;
-/* width: calc(1180px - ${({ $count })=>$count-1 *1rem }) */
 
 const CarouselButtons = styled.div`
   display: flex;

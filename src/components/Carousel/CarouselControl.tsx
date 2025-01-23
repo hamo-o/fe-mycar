@@ -1,18 +1,20 @@
+import type { MouseEvent } from 'react';
 import styled from 'styled-components';
 
 type Direction = 'left' | 'right';
 
 interface CarouselControlProps {
   direction: Direction;
+  onClick: (event: MouseEvent<HTMLElement>) => void;
 }
 
-const CarouselControl = ({ direction }: CarouselControlProps) => (
-  <Container $direction={direction}>
+const CarouselControl = ({ direction, onClick }: CarouselControlProps) => (
+  <Container $direction={direction} onClick={onClick}>
     <Shevron $direction={direction}/>
   </Container>
 );
 
-const Container = styled.div<{ $direction: Direction }>`
+const Container = styled.button<{ $direction: Direction }>`
   position: absolute;
   top: 40%;
   ${({ $direction }) => $direction === 'left' ? 'left: 0;' : 'right: 0;'}
